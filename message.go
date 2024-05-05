@@ -136,24 +136,24 @@ func displayAllLogs() {
 	}
 }
 
-type Quote struct {
-	Quote string `json:"quote"`
+type FactResponse struct {
+	Fact string `json:"fact"`
 }
 
 func getRandomFact() string {
-	resp, err := http.Get("https://api.quotable.io/random")
+	resp, err := http.Get("https://catfact.ninja/fact")
 	if err != nil {
-		return "Error fetching quote"
+		return "Error fetching fact"
 	}
 	defer resp.Body.Close()
 
-	var quote Quote
-	err = json.NewDecoder(resp.Body).Decode(&quote)
+	var factResp FactResponse
+	err = json.NewDecoder(resp.Body).Decode(&factResp)
 	if err != nil {
-		return "Error parsing quote"
+		return "Error parsing response"
 	}
 
-	return quote.Quote
+	return factResp.Fact
 }
 
 func readMultiWordInput() string {
